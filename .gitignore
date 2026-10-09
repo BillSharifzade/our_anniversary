@@ -1,0 +1,4 @@
+# исходные фото и видео (сжатые копии лежат в site/media)
+/photo_*.jpeg
+/telegram-cloud-document-*.mp4
+.DS_Store
