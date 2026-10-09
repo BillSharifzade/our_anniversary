@@ -1,4 +1,4 @@
-/* Музыка: если положить media/music.mp3 — играет она, иначе нежная музыкальная шкатулка */
+/* Музыка: наша песня (media/music.m4a); если она не загрузится — играет музыкальная шкатулка */
 const Music = (() => {
   const el = document.getElementById('bgm');
   let fileOk = false, fileFailed = false;
