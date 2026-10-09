@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Наш первый год</title>
+<meta name="description" content="10.10.2025 — 10.10.2026. Для моей звёздочки.">
+<meta name="theme-color" content="#07060d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 28C7 21 2 16 2 10.5 2 6.4 5.2 3.5 9 3.5c2.9 0 5.2 1.7 7 4.3 1.8-2.6 4.1-4.3 7-4.3 3.8 0 7 2.9 7 7 0 5.5-5 10.5-14 17.5z' fill='%23e8869f'/%3E%3C/svg%3E">
+<link rel="preload" href="media/img/p43-puddle2.webp" as="image">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked" data-season="night">
+
+<div class="atmo" aria-hidden="true"></div>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+<button id="soundBtn" class="sound" type="button" aria-label="Выключить музыку" hidden>
+  <span></span><span></span><span></span><span></span>
+</button>
+
+<!-- ───────── Конверт ───────── -->
+<div id="gate" class="gate">
+  <div class="gate-glow"></div>
+  <div class="gate-inner">
+    <p class="gate-date">10 · 10</p>
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="letter">
+        <p class="script">Здесь целый год.</p>
+        <p class="hand">Листай медленно<br>и включи звук ♡</p>
+      </div>
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+      <button class="seal" id="seal" type="button" aria-label="Открыть конверт">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27C8 21 3.5 16.5 3.5 11.2 3.5 7.4 6.4 4.8 9.8 4.8c2.6 0 4.7 1.5 6.2 3.8 1.5-2.3 3.6-3.8 6.2-3.8 3.4 0 6.3 2.6 6.3 6.4C28.5 16.5 24 21 16 27z"/></svg>
+      </button>
+    </div>
+    <p class="gate-to script">Моей звёздочке</p>
+    <p class="gate-hint">нажми на печать</p>
+  </div>
+</div>
+
+<main id="story">
+
+  <!-- ───────── Первый экран ───────── -->
+  <section class="hero" data-season="night" id="top">
+    <p class="eyebrow hero-date">10.10.2025 — 10.10.2026</p>
+    <h1 class="hero-title">
+      <span class="hero-small">С годовщиной,</span>
+      <span class="hero-name script" id="heroName">моя звёздочка</span>
+    </h1>
+    <div class="counter">
+      <p class="counter-label">Мы вместе уже</p>
+      <div class="counter-row">
+        <div><b id="cD">365</b><span id="lD">дней</span></div>
+        <div><b id="cH">00</b><span id="lH">часов</span></div>
+        <div><b id="cM">00</b><span id="lM">минут</span></div>
+        <div><b id="cS">00</b><span id="lS">секунд</span></div>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>листай</span><i></i></div>
+  </section>
+
+  <!-- ───────── Созвездие имён ───────── -->
+  <section class="names scene" data-season="night" id="names">
+    <div class="stage">
+      <p class="eyebrow names-eyebrow">У тебя так много имён…</p>
+      <div class="names-box">
+        <svg class="constellation" id="constellation" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <radialGradient id="starGlow">
+              <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+              <stop offset=".35" stop-color="#ffe8b8" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="heartFill" cx="50%" cy="45%" r="60%">
+              <stop offset="0" stop-color="#ff9fb6" stop-opacity=".28"/>
+              <stop offset="1" stop-color="#ff9fb6" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path class="c-heart" id="cHeart" d=""/>
+          <g id="cLines"></g>
+          <g id="cStars"></g>
+          <g id="cLabels"></g>
+        </svg>
+        <div class="names-center">
+          <span class="names-pre" id="namesPre">…и конечно же</span>
+          <span class="names-now script" id="nameNow"></span>
+        </div>
+      </div>
+      <p class="names-foot" id="namesFoot">и каждое — звезда на моём небе</p>
+      <p class="names-count" id="namesCount"></p>
+    </div>
+  </section>
+
+  <!-- ───────── I. Осень ───────── -->
+  <section class="chapter" data-season="autumn">
+    <div class="chapter-inner">
+      <span class="chapter-num" data-reveal>I</span>
+      <h2 class="chapter-title" data-reveal>Осень</h2>
+      <p class="chapter-line" data-reveal>Всё началось 10 октября.<br>Листья падали — а я влюблялся.</p>
+    </div>
+  </section>
+
+  <section class="duo" data-season="autumn">
+    <figure class="ph polaroid duo-a" data-reveal data-speed="-0.05">
+      <img src="media/img/p41-leaves1.webp" alt="Наши ноги среди осенних листьев" loading="lazy" data-zoom>
+    </figure>
+    <figure class="ph polaroid duo-b" data-reveal data-speed="0.07">
+      <img src="media/img/p53-converse.webp" alt="Кеды и осенние листья" loading="lazy" data-zoom>
+    </figure>
+    <p class="duo-caption hand" data-reveal>Носочек к носочку.<br>Так и стоим — уже целый год.</p>
+  </section>
+
+  <section class="puddle" data-season="autumn">
+    <div class="puddle-text">
+      <p class="eyebrow" data-reveal>Однажды, по дороге</p>
+      <h3 class="big" data-reveal>Между нами<br><em>было сердце.</em></h3>
+      <p class="sub" data-reveal>Даже лужа на асфальте всё про нас знала.</p>
+    </div>
+    <figure class="puddle-photo" data-reveal="zoom" id="puddle">
+      <img src="media/img/p43-puddle2.webp" alt="Сердечко из лужи между нашими ногами" loading="lazy" data-zoom>
+      <svg class="puddle-heart" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 86 C 24 66, 7 48, 15 28 C 22 12, 42 12, 50 30 C 58 12, 79 11, 86 28 C 94 48, 76 66, 50 86 Z"/>
+        <path class="h2" d="M49 89 C 21 68, 3 47, 13 26 C 21 9, 43 10, 51 28 C 58 9, 82 8, 89 27 C 97 49, 77 68, 52 87"/>
+      </svg>
+    </figure>
+    <div class="puddle-strip" data-reveal>
+      <img src="media/thumb/p40-puddle1.webp" data-full="media/img/p40-puddle1.webp" alt="Сердечко на асфальте" loading="lazy" data-zoom>
+      <img src="media/thumb/p44-puddle3.webp" data-full="media/img/p44-puddle3.webp" alt="Сердечко на асфальте" loading="lazy" data-zoom>
+      <img src="media/thumb/p45-puddle4.webp" data-full="media/img/p45-puddle4.webp" alt="Сердечко на асфальте" loading="lazy" data-zoom>
+    </div>
+  </section>
+
+  <section class="notebook" data-season="autumn">
+    <header class="sec-head">
+      <p class="eyebrow" data-reveal>Маленький блокнот</p>
+      <h3 class="big" data-reveal>Если бы я был…</h3>
+      <p class="sub" data-reveal>Нажимай на листок, чтобы перелистнуть</p>
+    </header>
+    <div class="deck-wrap" data-reveal>
+      <div class="deck" id="deck"></div>
+      <div class="deck-nav">
+        <button type="button" id="deckPrev" aria-label="Назад">←</button>
+        <span id="deckCount">1 / 7</span>
+        <button type="button" id="deckNext" aria-label="Дальше">→</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="frog" data-season="autumn">
+    <figure class="vframe" data-reveal>
+      <video class="loop" data-id="v18-frog" muted loop playsinline preload="none" poster="media/poster/v18-frog.jpg"></video>
+      <span class="vplay" aria-hidden="true">▶</span>
+    </figure>
+    <p class="hand frog-caption" data-reveal>Лягушачье колечко<br>и самая главная страница.</p>
+  </section>
+
+  <!-- ───────── II. Зима ───────── -->
+  <section class="chapter" data-season="winter">
+    <div class="chapter-inner">
+      <span class="chapter-num" data-reveal>II</span>
+      <h2 class="chapter-title" data-reveal>Зима</h2>
+      <p class="chapter-line" data-reveal>Холодно было только снаружи.</p>
+    </div>
+  </section>
+
+  <section class="feature" data-season="winter">
+    <figure class="ph feature-photo" data-reveal="zoom">
+      <img src="media/img/p47-snowheart.webp" alt="Сердце из снега" loading="lazy" data-zoom>
+    </figure>
+    <p class="feature-caption hand" data-reveal>Даже снег у нас<br>превращается в сердечко.</p>
+  </section>
+
+  <section class="cinema" data-season="winter">
+    <div class="cinema-stage">
+      <div class="cinema-bg" style="background-image:url(media/poster/v17-umbrella.jpg)"></div>
+      <figure class="cinema-frame">
+        <video class="loop" data-id="v17-umbrella" muted loop playsinline preload="none" poster="media/poster/v17-umbrella.jpg"></video>
+        <span class="vplay" aria-hidden="true">▶</span>
+      </figure>
+      <div class="cinema-text">
+        <p data-reveal>Ночь. Дождь. Фонари.</p>
+        <p class="script" data-reveal>И один зонт на двоих.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="duo duo-winter" data-season="winter">
+    <figure class="ph polaroid duo-a" data-reveal data-speed="-0.04">
+      <img src="media/img/p37-bread.webp" alt="Горячий нон на двоих" loading="lazy" data-zoom>
+      <figcaption class="hand">горячий нон на двоих</figcaption>
+    </figure>
+    <figure class="ph polaroid duo-b" data-reveal data-speed="0.06">
+      <img src="media/img/p46-guitar.webp" alt="Брелок: гитара, звёздочка и сердечко" loading="lazy" data-zoom>
+      <figcaption class="hand">гитара, звёздочка и сердечко</figcaption>
+    </figure>
+  </section>
+
+  <!-- ───────── III. Весна ───────── -->
+  <section class="chapter" data-season="spring">
+    <div class="chapter-inner">
+      <span class="chapter-num" data-reveal>III</span>
+      <h2 class="chapter-title" data-reveal>Весна</h2>
+      <p class="chapter-line" data-reveal>Город расцветал.<br>А я влюблялся в тебя заново.</p>
+    </div>
+  </section>
+
+  <section class="trio" data-season="spring">
+    <figure class="ph trio-a" data-reveal data-speed="0.06">
+      <img src="media/img/p34-lily.webp" alt="Белые лилии" loading="lazy" data-zoom>
+    </figure>
+    <figure class="vframe trio-b" data-reveal>
+      <video class="loop" data-id="v15-lilies" muted loop playsinline preload="none" poster="media/poster/v15-lilies.jpg"></video>
+      <span class="vplay" aria-hidden="true">▶</span>
+    </figure>
+    <figure class="ph trio-c" data-reveal data-speed="-0.05">
+      <img src="media/img/p35-lily2.webp" alt="Лилии" loading="lazy" data-zoom>
+    </figure>
+    <p class="trio-caption" data-reveal>Белые лилии.<br><em>Почти такие же нежные, как ты.</em></p>
+  </section>
+
+  <section class="feature feature-video" data-season="spring">
+    <figure class="vframe" data-reveal="zoom">
+      <video class="loop" data-id="v16-dusk" muted loop playsinline preload="none" poster="media/poster/v16-dusk.jpg"></video>
+      <span class="vplay" aria-hidden="true">▶</span>
+    </figure>
+    <p class="feature-caption hand" data-reveal>Весенние вечера,<br>когда совсем не хочется<br>расходиться по домам.</p>
+  </section>
+
+  <!-- ───────── IV. Лето ───────── -->
+  <section class="chapter" data-season="summer">
+    <div class="chapter-inner">
+      <span class="chapter-num" data-reveal>IV</span>
+      <h2 class="chapter-title" data-reveal>Лето</h2>
+      <p class="chapter-line" data-reveal>Самое солнечное лето.<br>Ещё бы — моё солнышко было рядом.</p>
+    </div>
+  </section>
+
+  <section class="flowers" data-season="summer">
+    <figure class="ph flowers-a" data-reveal data-speed="-0.05">
+      <img src="media/img/p14-sunflower.webp" alt="Подсолнух и лилии" loading="lazy" data-zoom>
+      <figcaption class="hand">подсолнух — для моего солнышка</figcaption>
+    </figure>
+    <figure class="ph flowers-b" data-reveal data-speed="0.07">
+      <img src="media/img/p17-blue.webp" alt="Синие хризантемы и бордовые розы" loading="lazy" data-zoom>
+      <figcaption class="hand">а синие — чтобы ты улыбнулась</figcaption>
+    </figure>
+  </section>
+
+  <section class="flip scene" data-season="summer" id="flip">
+    <div class="stage">
+      <div class="flip-film">
+        <div class="flip-frames" id="flipFrames">
+          <img src="media/img/p21-street1.webp" alt="" class="on">
+          <img src="media/img/p22-street2.webp" alt="">
+          <img src="media/img/p23-street3.webp" alt="">
+          <img src="media/img/p24-street4.webp" alt="">
+          <img src="media/img/p25-street5.webp" alt="">
+          <img src="media/img/p26-street6.webp" alt="">
+        </div>
+        <span class="flip-rec"><i></i> кадр <b id="flipNum">1</b>/6</span>
+      </div>
+      <div class="flip-text">
+        <p class="big" id="flipT1">Вот так мы выглядим<br><em>со стороны.</em></p>
+        <p class="sub" id="flipT2">Просто двое у дороги.<br>Но для меня — это целый мир.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="table" data-season="summer">
+    <header class="sec-head">
+      <p class="eyebrow" data-reveal>Кафешки, прогулки, глупые селфи</p>
+      <h3 class="big" data-reveal>Наши маленькие дни</h3>
+      <p class="sub" data-reveal id="tableHint">Фотографии можно двигать</p>
+    </header>
+    <div class="table-area" id="tableArea"></div>
+  </section>
+
+  <!-- ───────── Любовь — это… ───────── -->
+  <section class="loveis" data-season="love">
+    <header class="loveis-head">
+      <figure class="loveis-cans" data-reveal="zoom">
+        <img src="media/img/p20-loveis.webp" alt="Две банки «Love is…»" loading="lazy" data-zoom>
+      </figure>
+      <div>
+        <h3 class="loveis-title script" data-reveal>Любовь — это…</h3>
+        <p class="sub" data-reveal>Как на вкладышах из той самой жвачки.</p>
+      </div>
+    </header>
+    <div class="li-grid" id="liGrid"></div>
+  </section>
+
+  <!-- ───────── Наше кино ───────── -->
+  <section class="reel" data-season="love">
+    <header class="sec-head">
+      <p class="eyebrow" data-reveal>19 маленьких фильмов</p>
+      <h3 class="big" data-reveal>Наше кино</h3>
+      <p class="sub" data-reveal>Нажми на любое — и включи звук</p>
+    </header>
+    <div class="film" data-reveal>
+      <div class="film-track" id="filmTrack"></div>
+    </div>
+    <div class="film-nav">
+      <button type="button" id="filmPrev" aria-label="Назад">←</button>
+      <button type="button" id="filmNext" aria-label="Дальше">→</button>
+    </div>
+  </section>
+
+  <!-- ───────── V. Снова осень ───────── -->
+  <section class="chapter" data-season="autumn">
+    <div class="chapter-inner">
+      <span class="chapter-num" data-reveal>V</span>
+      <h2 class="chapter-title" data-reveal>Снова осень</h2>
+      <p class="chapter-line" data-reveal>Год сделал круг. Листья снова падают —<br>а я люблю тебя ещё сильнее, чем тогда.</p>
+    </div>
+  </section>
+
+  <section class="duo duo-again" data-season="autumn">
+    <figure class="ph polaroid duo-a" data-reveal data-speed="-0.05">
+      <img src="media/img/p54-peace.webp" alt="Осень и колечко" loading="lazy" data-zoom>
+    </figure>
+    <figure class="ph polaroid duo-b" data-reveal data-speed="0.07">
+      <img src="media/img/p48-leaves2.webp" alt="Носочек к носочку" loading="lazy" data-zoom>
+    </figure>
+    <p class="duo-caption hand" data-reveal>Шаг за шагом —<br>уже целый год.</p>
+  </section>
+
+  <section class="mosaic" data-season="autumn">
+    <header class="sec-head">
+      <p class="eyebrow" data-reveal>Каждый кадр</p>
+      <h3 class="big" data-reveal>Весь наш год —<br><em>в одном сердце</em></h3>
+      <p class="sub" data-reveal>Нажми на любой</p>
+    </header>
+    <div class="mosaic-grid" id="mosaic"></div>
+  </section>
+
+  <!-- ───────── Гипсофила ───────── -->
+  <section class="finale scene" data-season="gyps" id="finale">
+    <div class="stage">
+      <figure class="card-photo" id="cardPhoto">
+        <img src="media/img/p38-card.webp" alt="Открытка с засушенной гипсофилой" loading="lazy">
+      </figure>
+      <div class="finale-text">
+        <p class="f f1 eyebrow">Помнишь эту открытку?</p>
+        <blockquote class="f f2 hand">«Надеюсь, мы будем вместе столько же, сколько живут гипсофилы»</blockquote>
+        <p class="f f3">Я узнал: засушенная гипсофила хранится годами и почти не меняется.</p>
+        <p class="f f4 script">Значит — навсегда.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ending" data-season="gyps" id="ending">
+    <div class="hold" id="hold">
+      <p class="hold-hint">Зажми сердечко</p>
+      <button class="hold-heart" id="holdHeart" type="button" aria-label="Зажми сердечко">
+        <svg viewBox="0 0 100 92" aria-hidden="true">
+          <defs>
+            <clipPath id="heartClip"><path d="M50 88C20 66 4 50 4 29 4 14 15 4 29 4c9 0 16 5 21 13 5-8 12-13 21-13 14 0 25 10 25 25 0 21-16 37-46 59z"/></clipPath>
+            <linearGradient id="heartGrad" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#d9476b"/><stop offset="1" stop-color="#ff9fb6"/>
+            </linearGradient>
+          </defs>
+          <path class="hh-bg" d="M50 88C20 66 4 50 4 29 4 14 15 4 29 4c9 0 16 5 21 13 5-8 12-13 21-13 14 0 25 10 25 25 0 21-16 37-46 59z"/>
+          <rect id="holdFill" clip-path="url(#heartClip)" x="0" y="92" width="100" height="92" fill="url(#heartGrad)"/>
+          <path class="hh-line" d="M50 88C20 66 4 50 4 29 4 14 15 4 29 4c9 0 16 5 21 13 5-8 12-13 21-13 14 0 25 10 25 25 0 21-16 37-46 59z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="final" id="final" aria-live="polite">
+      <p class="final-1">С годовщиной,</p>
+      <p class="final-2 script">моя будущая жёнушка</p>
+      <p class="final-3">Я люблю тебя. Бесконечно.</p>
+      <svg class="infinity" viewBox="0 0 200 80" aria-hidden="true">
+        <path d="M100 40 C 80 10, 30 5, 22 40 C 30 75, 80 70, 100 40 C 120 10, 170 5, 178 40 C 170 75, 120 70, 100 40 Z"/>
+      </svg>
+      <p class="final-sign hand">Навсегда твой ♡</p>
+      <p class="final-date">10.10.2025 — ∞</p>
+      <button class="again" id="again" type="button">Посмотреть ещё раз ↺</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ───────── Просмотр фото и видео ───────── -->
+<div class="lightbox" id="lb" hidden>
+  <div class="lb-stage" id="lbStage"></div>
+  <p class="lb-cap" id="lbCap"></p>
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Закрыть">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Предыдущее">‹</button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Следующее">›</button>
+</div>
+
+<audio id="bgm" src="media/music.mp3" preload="auto" loop></audio>
+
+<script src="js/sky.js"></script>
+<script src="js/music.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
