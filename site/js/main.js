@@ -41,28 +41,28 @@
   ];
 
   const TABLE = [
-    ['p01-cafe-bag', 'кафешка'], ['p13-drinks', 'два стакана'], ['p07-2000', 'богач :)'], ['p28-dinner', 'ужин'],
-    ['p10-upside', 'мы :)'], ['p11-funny', 'смешной'], ['p04-selfie', 'селфи', '72% 50%'], ['p08-hands', 'лето'],
-    ['p09-cafe-table', 'ещё кафешка'],
+    ['p01-cafe-bag', 'ограбление HB:)'], ['p13-drinks', 'буль буль ти:)'], ['p07-2000', 'богач :)'], ['p28-dinner', 'ужин в парке'],
+    ['p10-upside', 'мы :)'], ['p11-funny', 'снято лучшим фотографом'], ['p04-selfie', 'совместная покупка', '72% 50%'], ['p08-hands', 'занят:)'],
+    ['p09-cafe-table', 'ждем пиццу'],
   ];
 
   const LOVE = [
     { img: 'p29-stamps', cap: '…одинаковые печати на запястьях', c: '#ff8fab', r: -2 },
-    { img: 'p30-milka', cap: '…делиться сладким', c: '#f2b632', r: 2 },
-    { vid: 'v10-bow', cap: '…бантик в волосах посреди супермаркета', c: '#a78bfa', r: -1.5 },
+    { img: 'p30-milka', cap: '…приятно удивлять', c: '#f2b632', r: 2 },
+    { vid: 'v10-bow', cap: '…одевать шикарный бантик из ее салфетки', c: '#a78bfa', r: -1.5 },
     { img: 'p36-knights', cap: '…вместе против всех чудовищ', c: '#5fb4f0', r: 2.5 },
-    { img: 'p05-doodle', cap: '…рисовать нас смешными человечками', c: '#4fc994', r: -2.5 },
-    { vid: 'v06-fingers', cap: '…пальчики, танцующие по столу', c: '#ff9a5c', r: 1.5 },
-    { img: 'p32-cheesecake', cap: '…чизкейк на жёлто-синей скамейке', c: '#f5c400', r: -1 },
+    { img: 'p05-doodle', cap: '…совместное художество', c: '#4fc994', r: -2.5 },
+    { vid: 'v06-fingers', cap: '…человечек из руки', c: '#ff9a5c', r: 1.5 },
+    { img: 'p32-cheesecake', cap: '…праздновать день рождения принцессы после тяжелого рабочего дня', c: '#f5c400', r: -1 },
     { img: 'p18-blue2', cap: '…цветы просто так', c: '#3fa9f5', r: 2 },
   ];
 
   const CLIPS = [
     ['v02-bed', 'Мы', 5.8], ['v00-walk', 'Прогулка', 30.1], ['v03-store', 'Супермаркет', 15.4], ['v10-bow', 'Бантик', 56.8],
-    ['v05-2000', 'Две тысячи', 6], ['v07-cafe', 'Кафе', 16.4], ['v01-dinner', 'Ужин', 13.1], ['v13-veranda', 'Веранда', 5.4],
-    ['v09-salad', 'Салат', 49.2], ['v06-fingers', 'Пальчики', 13.6], ['v04-doodles', 'Каракули', 17.9], ['v08-car', 'В машине', 39.6],
-    ['v11-laptop', 'Ноутбук', 36.6], ['v12-park', 'В парке', 36.5], ['v14-bench', 'Скамейка', 35.2], ['v15-lilies', 'Лилии', 11],
-    ['v16-dusk', 'Весенний вечер', 29.1], ['v17-umbrella', 'Под зонтом', 8.8], ['v18-frog', 'Лягушка', 17.4],
+    ['v05-2000', 'Две тысячи', 6], ['v07-cafe', 'Кафе', 16.4], ['v01-dinner', 'Рамен и девушка 20 века', 13.1], ['v13-veranda', 'Покушать на природе', 5.4],
+    ['v09-salad', 'Аристократ', 49.2], ['v06-fingers', 'Пальчики', 13.6], ['v04-doodles', 'Шедевр', 17.9], ['v08-car', 'Курутный поцелуй', 39.6],
+    ['v11-laptop', 'Перфекционизм', 36.6], ['v12-park', 'Кошечка', 36.5], ['v14-bench', 'Блинчики не дам', 35.2], ['v15-lilies', 'Светошка со светошками:)', 11],
+    ['v16-dusk', 'Стесняшка', 29.1], ['v17-umbrella', 'Марчона шпион', 8.8], ['v18-frog', 'Ляшгушка говорит факты', 17.4],
   ];
   const clipTitle = Object.fromEntries(CLIPS.map(([id, t]) => [id, t]));
 
@@ -84,23 +84,48 @@
   history.scrollRestoration = 'manual';
   scrollTo(0, 0);
 
-  const gate = $('#gate');
-  let opened = false;
-  function openGate() {
-    if (opened) return;
-    opened = true;
+  const gate = $('#gate'), envCard = $('#envCard'), gateHint = $('#gateHint');
+  let opened = false, envStage = 0; // 0 — лицевая сторона, 1 — обратная, 2 — открывается
+  const later = (ms, fn) => setTimeout(fn, reduce ? Math.min(ms, 300) : ms);
+
+  // первое касание: музыка и переворот конверта
+  function flipEnvelope() {
+    if (envStage !== 0) return;
+    envStage = 1;
     Music.start();
-    gate.classList.add('opening');
     $('#soundBtn').hidden = false;
-    setTimeout(() => {
+    envCard.classList.add('flipped');
+    gateHint.style.opacity = 0;
+    later(1050, () => {
+      envCard.classList.add('flat');
+      gateHint.textContent = 'нажми на печать';
+      gateHint.style.opacity = '';
+    });
+  }
+  // второе касание: печать трескается, клапан открывается, письмо выходит
+  function openGate() {
+    if (envStage !== 1 || !envCard.classList.contains('flat')) return;
+    envStage = 2;
+    opened = true;
+    gate.classList.add('opening', 'cracking');
+    if (navigator.vibrate) navigator.vibrate(18);
+    later(330, () => gate.classList.add('flap-open'));
+    later(330 + 425, () => gate.classList.add('flap-behind')); // ровно на 90° клапан уходит за письмо
+    later(1150, () => gate.classList.add('letter-out'));
+    later(3700, () => gate.classList.add('leaving'));
+    later(4300, () => {
       gate.classList.add('gone');
       document.body.classList.remove('locked');
       startHeroNames();
-    }, 2900);
-    setTimeout(() => gate.remove(), 4500);
+    });
+    later(5800, () => gate.remove());
   }
-  $('#seal').addEventListener('click', e => { e.stopPropagation(); openGate(); });
-  $('#envelope').addEventListener('click', openGate);
+  $('#envelope').addEventListener('click', () => (envStage === 0 ? flipEnvelope() : openGate()));
+  $('#envelope').addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    envStage === 0 ? flipEnvelope() : openGate();
+  });
 
   const soundBtn = $('#soundBtn');
   soundBtn.addEventListener('click', () => {
@@ -309,19 +334,21 @@
   function seeded(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
   function layoutTable() {
     const rnd = seeded(7);
-    const W = tableArea.clientWidth, H = tableArea.clientHeight;
-    const pw = pols[0].offsetWidth, ph = pols[0].offsetHeight || pw * 1.55;
+    const W = tableArea.clientWidth;
+    const pw = pols[0].offsetWidth, ph = pols[0].offsetHeight || pw * 1.6;
     const cols = W < 640 ? 2 : W < 1000 ? 3 : 4;
     const rows = Math.ceil(pols.length / cols);
-    const cw = W / cols, rh = (H - ph) / Math.max(1, rows - 1);
+    const cw = W / cols, rh = ph + 22;
+    // подписи важнее «кучи», поэтому ряды не перекрывают друг друга
+    tableArea.style.height = rows * rh + 40 + 'px';
     pols.forEach((el, i) => {
       const r = Math.floor(i / cols), c = i % cols;
-      const off = r % 2 ? cw * .25 : 0;
-      const x = clamp(c * cw + (cw - pw) / 2 + off + (rnd() - .5) * cw * .3, 4, W - pw - 4);
-      const y = clamp(r * rh + (rnd() - .5) * rh * .3, 0, H - ph);
+      const off = r % 2 ? cw * .18 : 0;
+      const x = clamp(c * cw + (cw - pw) / 2 + off + (rnd() - .5) * cw * .22, 4, W - pw - 4);
+      const y = r * rh + 16 + (rnd() - .5) * 18;
       el.style.left = x + 'px';
       el.style.top = y + 'px';
-      el.style.rotate = `${(rnd() - .5) * 18}deg`;
+      el.style.rotate = `${(rnd() - .5) * 14}deg`;
     });
   }
   layoutTable();
@@ -445,7 +472,6 @@
   lb.addEventListener('click', e => { if (e.target === lb || e.target === lbStage) closeLB(); });
   addEventListener('keydown', e => {
     if (lb.hidden) {
-      if (!opened && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openGate(); }
       return;
     }
     if (e.key === 'Escape') closeLB();

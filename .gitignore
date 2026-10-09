@@ -2,3 +2,4 @@
 /photo_*.jpeg
 /telegram-cloud-document-*.mp4
 .DS_Store
+/*.m4a
